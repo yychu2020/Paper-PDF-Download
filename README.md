@@ -8,21 +8,21 @@
 ✅ 完整代码如下：
 python
 
-import os
-import re
-import time
-import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin
-from habanero import Crossref
-from googletrans import Translator
+	import os
+	import re
+	import time
+	import requests
+	from bs4 import BeautifulSoup
+	from urllib.parse import urljoin
+	from habanero import Crossref
+	from googletrans import Translator
 
-# 设置保存路径
-SAVE_FOLDER = "D:/BaiduSyncdisk/参考文献"
-os.makedirs(SAVE_FOLDER, exist_ok=True)
+	# 设置保存路径
+	SAVE_FOLDER = "D:/BaiduSyncdisk/参考文献"
+	os.makedirs(SAVE_FOLDER, exist_ok=True)
 
-# 获取文章元数据
-def get_metadata(doi):
+	# 获取文章元数据
+	def get_metadata(doi):
     cr = Crossref()
     metadata = cr.works(ids=doi)
     item = metadata['message']
@@ -33,8 +33,8 @@ def get_metadata(doi):
     title_en = item['title'][0]
     return year, first_author, journal, title_en
 
-# 翻译英文标题为中文
-def translate_title(title_en):
+	# 翻译英文标题为中文
+	def translate_title(title_en):
     translator = Translator()
     try:
         translated = translator.translate(title_en, src='en', dest='zh-cn')
@@ -42,12 +42,12 @@ def translate_title(title_en):
     except:
         return title_en  # 翻译失败则保留英文
 
-# 清理非法文件名字符
-def sanitize_filename(s):
+	# 清理非法文件名字符
+	def sanitize_filename(s):
     return re.sub(r'[\\/*?:"<>|]', '', s)
 
-# 下载 PDF 文件
-def download_pdf(pdf_url, filename):
+	# 下载 PDF 文件
+	def download_pdf(pdf_url, filename):
     headers = {"User-Agent": "Mozilla/5.0"}
     try:
         r = requests.get(pdf_url, headers=headers, timeout=20)
@@ -63,8 +63,8 @@ def download_pdf(pdf_url, filename):
         print(f"❌ 下载失败：{pdf_url}，错误：{e}")
         return False
 
-# 从页面中提取 DOI 或 PDF 链接
-def extract_doi_and_pdf(html, base_url):
+	# 从页面中提取 DOI 或 PDF 链接
+	def extract_doi_and_pdf(html, base_url):
     soup = BeautifulSoup(html, "html.parser")
 
     # 尝试提取 DOI
@@ -81,8 +81,8 @@ def extract_doi_and_pdf(html, base_url):
 
     return doi, pdf_url
 
-# 主处理函数
-def process_article_page(url):
+	# 主处理函数
+	def process_article_page(url):
     print(f"\n📘 正在处理页面：{url}")
     headers = {"User-Agent": "Mozilla/5.0"}
 
@@ -113,8 +113,8 @@ def process_article_page(url):
     except Exception as e:
         print(f"❌ 页面处理失败：{e}")
 
-# 主入口
-if __name__ == "__main__":
+	# 主入口
+	if __name__ == "__main__":
     input_urls = [
         "https://www.nature.com/articles/s41524-025-01675-6",
         "https://www.nature.com/articles/s41586-020-2649-2",
