@@ -3,10 +3,7 @@
 
 请确保你安装了以下依赖：
 
-bash
-复制
-编辑
-pip install requests habanero googletrans==4.0.0-rc1 beautifulsoup4
+> pip install requests habanero googletrans==4.0.0-rc1 beautifulsoup4
 ✅ 完整代码如下：
 python
 复制
